@@ -1,247 +1,248 @@
-![fuxa logo](/client/src/favicon.ico)
-# FUXA
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-online-brightgreen)](https://frangoteam.github.io/FUXA/)
-[![Node](https://img.shields.io/badge/node-18%20LTS-green)](https://nodejs.org/)
-[![GitHub stars](https://img.shields.io/github/stars/frangoteam/FUXA?style=flat)](https://github.com/frangoteam/FUXA/stargazers)
-[![Docker Pulls](https://img.shields.io/docker/pulls/frangoteam/fuxa)](https://hub.docker.com/r/frangoteam/fuxa)
-[![npm downloads](https://img.shields.io/npm/dt/%40frangoteam/fuxa?label=npm%20downloads)](https://www.npmjs.com/package/@frangoteam/fuxa)
+# ForgeControl 工业组态与 SCADA 系统
 
-FUXA is a **web-based SCADA / HMI platform** for industrial automation, IoT and real-time process visualization.
+ForgeControl 是基于开源项目 [FUXA](https://github.com/frangoteam/FUXA) 扩展开发的 Web 工控软件系统，面向工业自动化、设备监控、数据采集、HMI 组态和运行时可视化。
 
-It allows you to build modern dashboards, connect industrial devices and monitor machines using standard industrial protocols such as **Modbus, OPC-UA, MQTT and Siemens S7**.
+系统分为两个主要状态：
 
-⭐ If you find FUXA useful, please consider giving the project a star.
+- **开发时**：设备与变量配置、画面设计、控件配置、全局脚本、AI 辅助编程和项目设置。
+- **运行时**：实时数据显示、按钮与控件动作、脚本执行、报警监控和运行日志。
 
-![fuxa editor](/screenshot/fuxa-editor.png)
+> 当前项目仍遵循原 FUXA 的 MIT 开源许可证。使用、修改和发布时请保留原项目版权及许可证说明。
 
-![fuxa ani](/screenshot/fuxa-thinglinks.gif)
+## 主要功能
 
-![fuxa action](/screenshot/feature-action-move.gif)
+- 基于浏览器的 SCADA/HMI 图形组态编辑器
+- SVG 工业画面和可复用控件
+- 实时变量、历史数据、报警和通知
+- JavaScript 全局脚本、画面脚本和控件脚本
+- Python 服务端脚本
+- AI 辅助生成 JavaScript/Python 脚本
+- OpenAI 兼容模型接口配置
+- Excel 变量批量导入
+- 设备连接与驱动管理
+- 运行时动作与脚本实时日志
+- 用户、角色和访问控制
 
-## ✨ Features
-- **Industrial protocol support**
-  Modbus RTU/TCP, Siemens S7 Protocol, OPC-UA, BACnet IP, MQTT, Ethernet/IP (Allen Bradley), ODBC, ADSclient, Gpio (Raspberry), WebCam, MELSEC, Redis
-- **Database and data storage**
-  Built-in data historian (DAQ) with support for SQLite, InfluxDB and other time-series databases.
-  External integrations via ODBC and Redis.
-- **SCADA/HMI Web-Editor**
-  Engineering and Design completely web-based
-- **Cross-platform architecture**
-  Backend: Node.js
-  Frontend: Angular, HTML5, CSS, SVG
+## 支持的工业协议
 
-## Why FUXA
+项目继承并保留 FUXA 的工业通信能力，当前重点支持：
 
-FUXA provides a modern **web-based platform for industrial monitoring, SCADA/HMI applications and IoT dashboards**.
+- Siemens S7
+- Modbus TCP
+- Modbus RTU
 
-It is designed to simplify the creation of real-time visualizations and industrial integrations using standard web technologies.
+同时保留 OPC UA、MQTT、BACnet/IP、EtherNet/IP、ADS、MELSEC、ODBC、Redis 等原有驱动能力。
 
-Key advantages:
+## 本项目相对 FUXA 的主要修改
 
-- Modern **web-based SCADA / HMI architecture**
-- Visual editor for dashboards and process visualization
-- Support for industrial protocols (Modbus, OPC-UA, MQTT, Siemens S7 and more)
-- Built with modern technologies (Node.js, Angular, SVG)
-- Runs on **Linux, Windows, macOS, Docker, Raspberry Pi and more**
-- Open-source and extensible
+### 1. 中文开发环境
 
-## 🚀 Live Demo
-Here is a [live demo](https://frangoteam.github.io) example of FUXA editor.
+- 开发环境默认语言改为简体中文。
+- 保留英文和其他已有语言切换能力。
+- 新增功能已补充中文界面文字。
 
-## 📚 Documentation
+### 2. Excel 变量导入
 
-Official documentation is available at:
+- 在变量管理中增加 Excel 文件导入。
+- 仅支持 Excel 工作簿格式，不提供 CSV 和 TSV 导入。
+- 支持导入前解析、字段映射、数据校验和错误提示。
+- 用于减少大量 PLC/设备变量的重复手工录入。
 
-👉 https://frangoteam.github.io/FUXA/
+### 3. 驱动与连接管理
 
-The documentation source is located in the `/docs` directory of this repository.
+- 强化设备连接和驱动管理入口。
+- 当前重点覆盖 Siemens S7、Modbus TCP 和 Modbus RTU。
+- 变量仍与对应设备、驱动地址和数据类型关联。
 
-The site is built using MkDocs (Material theme) and automatically deployed via GitHub Actions.
+### 4. Python 脚本支持
 
-## 🛠 Installing and Running
-FUXA is developed with NodeJS (backend) and Angular (frontend).
+- Python 脚本与原有 JavaScript 脚本并存。
+- Python 脚本可以在全局脚本、画面和控件相关开发流程中使用。
+- Python 代码通过独立工作进程执行。
+- 当前提供受限的变量读写和日志接口。
+- 禁止任意导入、文件访问、网络访问、子进程、`eval` 和 `exec`。
 
-For detailed guides and advanced configuration options, see the official documentation:
+### 5. AI 脚本编写
 
-👉 https://frangoteam.github.io/FUXA/
+- JavaScript 和 Python 编辑器均支持 AI 辅助编写。
+- 支持在系统设置中配置 OpenAI 兼容接口：
+  - API 地址
+  - 模型名称
+  - API Key
+- AI 会接收当前项目中的变量、画面、控件和脚本上下文。
+- AI 输出会过滤思考过程、Markdown 包装和非代码文字。
+- AI 只能使用平台已经注册的系统函数白名单。
+- 如果生成不存在的 `$函数()`，服务端会拒绝结果并返回明确错误。
 
+完整规则请查看：
 
-### 1° Option - Running from docker
+- [AI 脚本生成规则](docs/AI脚本生成规则.md)
+- [脚本配置说明](docs/HowTo-configure-Script.md)
+
+### 6. 新增 UI 脚本接口
+
+新增并注册以下运行画面接口：
+
+```javascript
+$setViewBackground(cssColor)
+$setControlBackground(controlNameOrId, cssColor)
 ```
-docker pull frangoteam/fuxa:latest
-docker run -d -p 1881:1881 frangoteam/fuxa:latest
 
-// persistent storage of application data (project), daq (tags history), logs and images (resource)
-docker run -d -p 1881:1881 -v fuxa_appdata:/usr/src/app/FUXA/server/_appdata -v fuxa_db:/usr/src/app/FUXA/server/_db -v fuxa_logs:/usr/src/app/FUXA/server/_logs -v fuxa_images:/usr/src/app/FUXA/server/_images frangoteam/fuxa:latest
+示例：
 
-// with Docker compose
-// persistent storage will be at ./appdata ./db ./logs and ./images
-wget https://raw.githubusercontent.com/frangoteam/FUXA/master/compose.yml
-docker compose up -d
+```javascript
+$setViewBackground('#00FF00');
+$setControlBackground('button_1', '#00FF00');
 ```
 
-Open up a browser (better Chrome) and navigate to http://localhost:1881
+控件背景接口支持使用控件名称或内部控件 ID。
 
-### 2° Option - Install from source
-[Download the latest release](https://github.com/frangoteam/FUXA/releases) and unpack it
+### 7. 运行时脚本日志
 
-You need to have installed [Node.js](https://nodejs.org/en/about/previous-releases)
-- Recommended: Node.js 18 LTS
+- 运行界面增加“脚本日志”按钮。
+- 日志窗口显示在运行画面下方。
+- 实时记录：
+  - 脚本开始和结束
+  - 系统函数调用
+  - 服务端 UI 命令发送
+  - 浏览器命令接收
+  - 控件或画面操作结果
+  - 错误原因
+- 日志支持清空、关闭和未读数量提示。
 
-**Note** Starting from FUXA 1.2.7, Node.js 14 and older versions are not supported due to upstream dependency updates.
+### 8. 脚本执行问题修复
 
-**WARNING** On Linux systems (especially Raspberry Pi), installing native dependencies with Node.js 18 may require additional build tools.
-If you do not intend to use specific features, you can safely remove them from ```server/package.json```:
-- Remove ```node-snap7``` if you do not need Siemens S7 communication
-- Remove ```odbc``` if you do not need external database connectivity
+- 修复服务端缺少 `SCRIPT_COMMAND` 事件导致 UI 命令无法到达浏览器的问题。
+- 修复普通运行脚本异常被静默吞掉的问题。
+- 修复具体运行画面路由中日志按钮不显示的问题。
+- 增加控件名称到内部控件 ID 的查找和回退机制。
 
+## AI JavaScript 常用接口
+
+### 变量操作
+
+```javascript
+const value = await $getTag('变量ID');
+$setTag('变量ID', value);
+const tagId = $getTagId('变量名称', '设备名称');
 ```
-cd ./server
+
+### 画面和控件
+
+```javascript
+$setView('画面名称');
+$setViewBackground('#808080');
+$setControlBackground('控件名称', '#00FF00');
+```
+
+### 历史数据与报警
+
+```javascript
+const history = await $getHistoricalTags(
+    ['变量ID'],
+    Date.now() - 3600000,
+    Date.now()
+);
+
+const alarms = await $getAlarms();
+```
+
+请勿使用未在 [AI 脚本生成规则](docs/AI脚本生成规则.md) 中列出的 `$函数()`。
+
+## Python 脚本示例
+
+```python
+def main(event):
+    value = tags.read("t_temperature")
+    logger.info(value)
+    if value > 80:
+        tags.write("t_alarm", True)
+```
+
+## 源码运行
+
+### 环境要求
+
+- Node.js 18 LTS 或兼容版本
+- npm
+- Python 3（使用 Python 脚本功能时）
+
+### 安装服务端依赖
+
+```bash
+cd server
 npm install
-npm start
 ```
 
-Open up a browser (better Chrome) and navigate to http://localhost:1881
+### 安装并构建客户端
 
-### 3° Option - Install from [NPM](https://www.npmjs.com/package/@frangoteam/fuxa)
-
-You need to have installed [Node.js](https://nodejs.org/en/about/previous-releases)
-- Recommended: Node.js 18 LTS
-
-**WARNING** In linux with nodejs Version 18 the installation could be a challenge.
-If you don't intend communicate with Siemens PLCs via S7 (node-snap7 library) you can install from [NPM @frangoteam/fuxa-min](https://www.npmjs.com/package/@frangoteam/fuxa-min)
-
-```
-npm install -g --unsafe-perm @frangoteam/fuxa
-fuxa
-```
-
-Open up a browser (better Chrome) and navigate to http://localhost:1881
-
-### 4° Option - Install using prebuilt Electron Packages
-
-You will need to be logged into github to access the download button for Electron Action Builds,
-click on the workflow and scroll down to Artifacts and click the download icon for you system
-
-[Electron Action Builds](https://github.com/frangoteam/FUXA/actions/workflows/electron_latest.yml)
-
-<img width="2082" height="531" alt="image" src="https://github.com/user-attachments/assets/40f01e1d-cf39-4145-99a0-e8fedf791edf" />
-
-### 5° Option - Headless Portable Binaries for Embedded Devices
-
-For headless deployments on embedded devices or servers without GUI, FUXA provides self-contained portable binaries for Windows, macOS, and Linux.
-
-These binaries include everything needed (server, client) and run as standalone executables.
-
-Download the latest builds from GitHub Actions artifacts:
-
-[Headless Portable Builds](https://github.com/frangoteam/FUXA/actions/workflows/headless_packaging.yml)
-
-For detailed installation and running instructions, see the documentation.
-
-### Creating the Electron Application
-Electron is a framework for building cross-platform desktop applications using web technologies. An Electron application is standalone, meaning it can be run independently on your desktop without needing a web browser.
-
-To create the Electron application, you need to have node.js 18 installed. Follow these steps:
-
-Build Server and Client First
-```
-cd ./server
-npm install
-cd ../client
+```bash
+cd client
 npm install
 npm run build
 ```
 
-Packaging
-```
-cd ./app
-npm install
-npm run package
-```
+### 启动系统
 
-After following these steps, you will have a standalone Electron application for FUXA. The application can be found in the ./app directory.
-
-## Usage and Documentation
-- 📚 Official Documentation: https://frangoteam.github.io/FUXA/
-- Look video from [frangoteam](https://www.youtube.com/@umbertonocelli5301)
-- Look video from [Fusion Automate - Urvish Nakum](https://youtube.com/playlist?list=PLxrSjjYyzaaK8uY3kVaFzfGnwhVXiCEAO&si=aU1OxgkUvLQ3bXHq)
-- Browse the [DeepWiki](https://deepwiki.com/frangoteam/FUXA) for AI-assisted docs and code navigation
-
-## Community SVG Widgets
-
-Looking for ready-made, reusable SVG widgets?
-Check out the companion repository **FUXA-SVG-Widgets**:
-
-- Repository: https://github.com/frangoteam/FUXA-SVG-Widgets
-- Authoring guide & examples: see the repo README and the Wiki page:
-  https://github.com/frangoteam/FUXA/wiki/HowTo-Widgets
-
-## 🧪 To Debug (Full Stack)
-Install and start to serve the frontend
-```
-cd ./client
-npm install
+```bash
+cd server
 npm start
 ```
 
-Start the Server and Client (Browser) in Debug Mode
-```
-In vscode: Debug ‘Server & Client’
-```
+浏览器访问：
 
-## 🏗 To Build
-Build the frontend for production
-```
-cd ./client
-ng build --configuration=production
+```text
+http://localhost:1881
 ```
 
-## Who uses FUXA
+## 开发模式
 
-FUXA is used in industrial automation, IoT, monitoring and research environments.
+启动 Angular 客户端：
 
-### FUXA Pro
+```bash
+cd client
+npm start
+```
 
-If you are using FUXA in production, consider supporting the development of the project by using **FUXA Pro**.**.
+启动服务端：
 
-FUXA Pro includes additional professional features such as:
+```bash
+cd server
+npm start
+```
 
-- White-label branding (custom logo and labels)
-- Additional resources and templates
-- User and script event logging
-- Unlimited installations
+## 测试
 
-The open-source version of FUXA remains fully available and continues to evolve with community contributions.
+服务端自动化测试：
 
-**License:** one-time payment – €100
+```bash
+cd server
+npm test
+```
 
-More information:
-https://frangoteam.org
+客户端构建检查：
 
-## 🤝 Contributing
+```bash
+cd client
+npm run build
+```
 
-Contributions are welcome and greatly appreciated.
+## 项目文档
 
-You can contribute by:
+- [ForgeControl 扩展架构](docs/forgecontrol-extensions.md)
+- [AI 脚本生成规则](docs/AI脚本生成规则.md)
+- [脚本配置说明](docs/HowTo-configure-Script.md)
+- [原 FUXA 文档](https://frangoteam.github.io/FUXA/)
 
-- Improving or fixing code
-- Enhancing documentation
-- Reporting bugs
-- Proposing new features
-- Sharing examples and use cases
+## 上游项目
 
-Before submitting a Pull Request, please open an issue to discuss major changes.
+本项目基于：
 
-For full contribution guidelines (code and documentation), please read:
+- FUXA 仓库：[frangoteam/FUXA](https://github.com/frangoteam/FUXA)
+- FUXA 官方文档：[frangoteam.github.io/FUXA](https://frangoteam.github.io/FUXA/)
 
-👉 [CONTRIBUTING.md](CONTRIBUTING.md)
+感谢 FUXA 原作者和社区贡献者提供的开源基础。
 
-## 💬 Let us know!
-We’d be really happy if you send us your own shapes in order to collect a library to share it with others. Just send an email to info@frangoteam.org and do let us know if you have any questions or suggestions regarding our work.
+## 许可证
 
-## <a href="https://discord.gg/WZhxz9uHh4" target="_blank" > <img src="https://skillicons.dev/icons?i=discord" alt=""></a>
-
-## 📄 License
-MIT.
+本项目沿用 [MIT License](LICENSE)。二次发布时必须遵守许可证要求并保留原始版权声明。
