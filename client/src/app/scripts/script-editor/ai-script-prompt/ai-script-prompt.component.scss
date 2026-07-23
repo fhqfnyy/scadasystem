@@ -1,0 +1,23 @@
+.ai-prompt-content {
+    min-width: 520px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.ai-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    color: #b71c1c;
+    background: #ffebee;
+    word-break: break-word;
+}

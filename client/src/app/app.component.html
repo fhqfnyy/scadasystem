@@ -1,0 +1,52 @@
+<div id="main-container" class="container">
+    <div *ngIf="serverErrorBanner$ | async" class="banner">
+        <div>
+            <span>{{'msg.server-connection-failed' | translate}}</span>
+            <mat-icon>block</mat-icon>
+        </div>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="warn" style="position: absolute; top: 0px; left: 0px; right: 0px; z-index: 99999;">
+    </mat-progress-bar>
+    <app-header class="header" [hidden]="isHidden()"></app-header>
+    <div [ngClass]="getClass()">
+        <router-outlet></router-outlet>
+        <ngx-fab-button *ngIf="showDevNavigation()" #fabmenu icon="menu" iconOpen="menu" class="fab-button" color="rgba(68,138,255, 1)">
+            <ngx-fab-item-button color="rgba(68,138,255, 1)" content="{{'app.editor' | translate}}" (click)="onGoTo('editor')" (touchend)="onGoTo('editor')"></ngx-fab-item-button>
+            <ngx-fab-item-button color="rgba(68,138,255, 1)" content="{{'app.lab' | translate}}" (click)="onGoTo('lab')" (touchend)="onGoTo('lab')"></ngx-fab-item-button>
+            <ngx-fab-item-button color="rgba(68,138,255, 1)" content="{{'app.home' | translate}}" (click)="onGoTo('home')" (touchend)="onGoTo('home')"></ngx-fab-item-button>
+        </ngx-fab-button>
+        <div *ngIf="showRuntimeScriptLog()" class="runtime-script-log">
+            <button mat-raised-button class="runtime-log-toggle" (click)="toggleRuntimeScriptLog()">
+                <mat-icon>terminal</mat-icon>
+                {{'runtime.script-log' | translate}}
+                <span *ngIf="scriptLogUnread" class="runtime-log-badge">{{scriptLogUnread}}</span>
+            </button>
+            <section *ngIf="scriptLogExpanded" class="runtime-log-panel">
+                <header>
+                    <span>
+                        <mat-icon>terminal</mat-icon>
+                        {{'runtime.script-log-title' | translate}}
+                    </span>
+                    <div>
+                        <button mat-icon-button (click)="clearRuntimeScriptLog()" matTooltip="{{'runtime.script-log-clear' | translate}}">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="toggleRuntimeScriptLog()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </header>
+                <div #runtimeScriptLog class="runtime-log-content">
+                    <div *ngIf="!scriptLogs.length" class="runtime-log-empty">
+                        {{'runtime.script-log-empty' | translate}}
+                    </div>
+                    <div *ngFor="let log of scriptLogs"
+                         class="runtime-log-line" [class.runtime-log-error]="log.type === 'error'">
+                        <span class="runtime-log-time">{{log.time}}</span>
+                        <span>{{log.message}}</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
